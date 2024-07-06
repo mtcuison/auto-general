@@ -1,0 +1,241 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Feb 1, 2023, 10:24:41 AM
+    Author     : Arsiela
+*/
+#LabelDesc {
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 11.5px;
+}
+
+.glyph-icon {
+    -fx-fill: black;
+}
+
+.button {
+    /*-fx-background-color: transparent;*/
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 11.5px;
+}
+.button:hover
+{
+    -fx-background-color: #878787;
+    -fx-text-fill: white;
+}
+
+#btnClose:hover{
+    -fx-background-color: #ed1800;
+    -fx-text-fill: white;
+
+}
+#btnClose:hover .glyph-icon, #btnClose:hover .glyph-icon
+{
+    -fx-fill: white;
+}
+.text-area {
+    -fx-opacity: 1.0;
+    -fx-background-color:
+        grey,
+        white;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 11.5px;
+}
+.text-area:disabled {
+    -fx-text-fill: black;
+    -fx-opacity: 1.0;
+    -fx-background-color:
+        grey,
+        white;
+}
+.text-field {
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 11.5px;
+    -fx-opacity: 1.0;
+    -fx-background-color:
+        grey,
+        white;
+}
+.text-field:focused {
+    -fx-background-color:
+        orange,
+        white;
+}
+.text-field:disabled {
+    -fx-text-fill: black;
+    -fx-opacity: 1.0;
+    -fx-background-color:
+        grey,
+        white;
+}
+
+/*Checkbox style*/
+.check-box{
+    -fx-font-family: "Arial";
+    -fx-opacity: 1.0;
+    -fx-font-size: 11.5px;
+}
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+
+}
+
+.check-box:selected .box {
+    -fx-border-color:orange;
+}
+
+.combo-box-base{
+    -fx-font-family: "Arial";
+    -fx-background-color: white;
+    -fx-border-color: grey;
+    -fx-text-alignment: center;
+    -fx-border-radius:3px;
+    -fx-text-fill: black;
+    -fx-font-size: 11.5px;
+}
+
+.combo-box-base:disabled,
+.list-cell:disabled,
+.check-box:disabled{
+    -fx-opacity: 1;
+}
+
+.combo-box-base:disabled,
+.list-cell:disabled,
+.check-box:disabled{
+    -fx-opacity: 1;
+}
+/*  Radio Button Css*/
+.radio-button {
+    -fx-font-family: "Arial";
+    -fx-font-size: 11.5px;
+
+}
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: orange;
+    -fx-background-color: white;
+    -fx-border-radius: 15px;
+    -fx-padding: 4px;
+    -fx-font-family: "Arial";
+    -fx-font-size: 11.5px;
+
+}
+.radio-button .radio:selected {
+    -fx-background-color: white;
+}
+.radio-button -radio:armed {
+    -fx-background-color: white;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: white;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: white;
+}
+.radio-button .dot {
+    -fx-mark-highlight-color: orange ;
+    -fx-mark-color: orange ;
+    -fx-background-radius: 15px;
+    -fx-padding: 4px;
+}
+
+/*Table*/
+/*.table-view{
+   -fx-background-color: transparent;
+}*/
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #4d5656;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .filler, .table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 20px;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: black;
+    -fx-font-size: 11px;
+    -fx-font-weight: 300;
+    -fx-font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    -fx-alignment: CENTER;
+
+}
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #D0D3D4;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+    -fx-cell-size: 25px;
+}
+.table-row-cell:selected {
+    -fx-background-color: #B3B6B7;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+
+.required-field {
+    -fx-border-color: #fb0000;
+    -fx-text-fill: red;
+    -fx-border-width: 0 0 2 0;
+}
+.container-shadow{
+    -fx-effect: dropshadow(gaussian, #c5c5c5, 0, 0, 0, 2);
+}
+.tooltip {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+/* Unity Delivery Receipt*/
+.unity-container{
+    -fx-effect: dropshadow(gaussian, #c5c5c5, 0, 0, 0, 2);
+}

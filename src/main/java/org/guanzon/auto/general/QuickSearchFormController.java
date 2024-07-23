@@ -455,7 +455,8 @@ public class QuickSearchFormController implements Initializable {
         try {
             String lsColName = "";
             String lsValue = "";
-            String lsSQL = MiscUtil.addCondition(getSQ_FormListRetrieval(), " sFormCode = " + SQLUtil.toSQL(psFormCode));
+            String lsSQL = MiscUtil.addCondition(getSQ_FormListRetrieval(), " sFormCode = " + SQLUtil.toSQL(psFormCode))
+                            + " ORDER BY nRowNoxxx ASC";
             ResultSet loRS;
             System.out.println(lsSQL);
             loRS = poGRider.executeQuery(lsSQL);

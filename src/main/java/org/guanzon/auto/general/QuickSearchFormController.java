@@ -9,6 +9,7 @@ import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import org.guanzon.appdriver.base.GRider;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -477,11 +479,11 @@ public class QuickSearchFormController implements Initializable {
                         lsColName = "DATE(" + loRS.getString("sRetColNm") + ")" ;
                         
                         if(loRS.getString("sOperator").equals(">=")){
-                            lsValue =  String.valueOf(LocalDate.of(  strToDate(CommonUtils.xsDateMedium((Date) poGRider.getServerDate())).getYear(), 
-                                                    strToDate(CommonUtils.xsDateMedium((Date) poGRider.getServerDate())).getMonth(), 
+                            lsValue =  String.valueOf(LocalDate.of(  strToDate(xsDateShort((Date) poGRider.getServerDate())).getYear(), 
+                                                    strToDate(xsDateShort((Date) poGRider.getServerDate())).getMonth(), 
                                                     1));
                         } else {
-                            lsValue = CommonUtils.xsDateMedium((Date) poGRider.getServerDate());
+                            lsValue = xsDateShort((Date) poGRider.getServerDate());
                         }
                         
                     } else {
@@ -518,6 +520,20 @@ public class QuickSearchFormController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(QuickSearchFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static String xsDateShort(Date fdValue) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(fdValue);
+        return date;
+    }
+
+    public static String xsDateShort(String fsValue) throws ParseException, java.text.ParseException {
+        SimpleDateFormat fromUser = new SimpleDateFormat("MMMM dd, yyyy");
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String lsResult = "";
+        lsResult = myFormat.format(fromUser.parse(fsValue));
+        return lsResult;
     }
     
     /*Convert Date to String*/

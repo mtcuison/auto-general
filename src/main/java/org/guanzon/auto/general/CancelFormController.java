@@ -24,21 +24,23 @@ import org.guanzon.appdriver.base.GRider;
 /**
  * FXML Controller class
  *
- * @author Auto Group Programmers
+ * @author Arsiela Date Created: 05-20-2023
  */
 public class CancelFormController implements Initializable {
 
     private GRider oApp;
-////    private MasterCallback oListener;
-//    private CancellationMaster oTrans;
-    private boolean pbState;
-    private String psSourceNox;
-    private String psTransNo;
-    private String psSourceCD;
+    private CancellationMaster oTrans;
+    private boolean state;
+
+    private String sSourceNox;
+    private String sTransNo;
+    private String sSourceCD;
 
     private final String pxeModuleName = "Cancellation / Deactivation Remarks";
     @FXML
-    private Button btnCancel, btnDCancel;
+    private Button btnCancel;
+    @FXML
+    private Button btnDCancel;
     @FXML
     private Label lblFormNo;
     @FXML
@@ -49,19 +51,19 @@ public class CancelFormController implements Initializable {
     }
 
     public void setsSourceNox(String fsValue) {
-        psSourceNox = fsValue;
+        sSourceNox = fsValue;
     }
 
     public void setsSourceCD(String fsValue) {
-        psSourceCD = fsValue;
+        sSourceCD = fsValue;
     }
 
     public void setTransNo(String fsValue) {
-        psTransNo = fsValue;
+        sTransNo = fsValue;
     }
 
     public boolean setState() {
-        return pbState;
+        return state;
     }
 
     private Stage getStage() {
@@ -73,22 +75,20 @@ public class CancelFormController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        oTrans = new CancellationMaster(oApp, oApp.getBranchCode(), true); //Initialize ClientMaster
 
-//        oTrans = new CancellationMaster(oApp, oApp.getBranchCode(), true); //Initialize ClientMaster
-////        oTrans.setCallback(oListener);
-//        oTrans.setWithUI(true);
-        lblFormNo.setText(psTransNo);
+        lblFormNo.setText(sTransNo);
         setCapsLockBehavior(textArea01);
 
-        Pattern loPattern = Pattern.compile("^[a-zA-Z0-9 ]*");
-        textArea01.setTextFormatter(createTextFormatter(loPattern));
+        Pattern pattern;
+        pattern = Pattern.compile("^[a-zA-Z0-9 ]*");
+        textArea01.setTextFormatter(createTextFormatter(pattern));
 
-        btnCancel.setOnAction(this::handleButtonAction);
-        btnDCancel.setOnAction(this::handleButtonAction);
+        btnCancel.setOnAction(this::cmdButton_Click);
+        btnDCancel.setOnAction(this::cmdButton_Click);
     }
 
-    private void handleButtonAction(ActionEvent event) {
+    private void cmdButton_Click(ActionEvent event) {
         String lsButton = ((Button) event.getSource()).getId();
         switch (lsButton) {
             case "btnCancel":
@@ -96,29 +96,32 @@ public class CancelFormController implements Initializable {
                 } else {
                     return;
                 }
+
                 if (textArea01.getText().length() < 20) {
                     ShowMessageFX.Warning(null, pxeModuleName, "Please enter at least 20 characters.");
                     textArea01.requestFocus();
                     return;
                 }
-//                if (oTrans.CancelForm(psTransNo, textArea01.getText(), psSourceCD, psSourceNox)) {
-//                    pbState = true;
-//                } else {
-//                    return;
-//                }
+
+                if (oTrans.CancelForm(sTransNo, textArea01.getText(), sSourceCD, sSourceNox)) {
+                    state = true;
+                } else {
+                    return;
+                }
                 CommonUtils.closeStage(btnCancel);
                 break;
             case "btnDCancel":
-                pbState = false;
+                state = false;
                 CommonUtils.closeStage(btnDCancel);
                 break;
+
             default:
                 ShowMessageFX.Warning(null, pxeModuleName, "Button with name " + lsButton + " not registered.");
                 break;
         }
     }
     
-    public static void setCapsLockBehavior(TextArea textArea) {
+    private static void setCapsLockBehavior(TextArea textArea) {
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (textArea.getText() != null) {
                 textArea.setText(newValue.toUpperCase());
@@ -127,7 +130,7 @@ public class CancelFormController implements Initializable {
     }
     
    // Method to create a TextFormatter with a pattern-based validator
-    public static TextFormatter<String> createTextFormatter(Pattern pattern) {
+    private static TextFormatter<String> createTextFormatter(Pattern pattern) {
         return new TextFormatter<>(createTextUnaryOperator(pattern));
     }
 

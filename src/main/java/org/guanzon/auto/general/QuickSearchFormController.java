@@ -177,7 +177,7 @@ public class QuickSearchFormController implements Initializable {
             initGrid();
             initCriteria();
             loadCriteria();
-            executeQuery();
+            //executeQuery();
         } 
         pbActivated = !pbActivated;
     }

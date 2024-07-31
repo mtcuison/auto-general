@@ -20,17 +20,16 @@ import org.guanzon.appdriver.base.GRider;
 
 /**
  *
- * @author Arsiela Date Created: 05-20-2023
+ * @author Arsiela
+ * Date Created: 05-20-2023
  */
 public class CancelForm {
-
     private double xOffset = 0;
     private double yOffset = 0;
     public boolean bState = false;
-
     /*CANCELLATION FORM REMARKS*/
-    public boolean loadCancelWindow(GRider oApp, String sSourceNox, String sTransNox, String sSourceCD) throws SQLException {
-
+    public boolean loadCancelWindow(GRider oApp, String sSourceNox, String sTransNox, String sSourceCD ) throws SQLException{
+       
         try {
             Stage stage = new Stage();
 
@@ -38,12 +37,12 @@ public class CancelForm {
             fxmlLoader.setLocation(getClass().getResource("CancelForm.fxml"));
 
             CancelFormController loControl = new CancelFormController();
-//            loControl.setGRider(oApp);
-//            loControl.setsSourceNox(sSourceNox);
-//            loControl.setsSourceCD(sSourceCD);
-//            loControl.setTransNo(sTransNox);
+            loControl.setGRider(oApp);
+            loControl.setsSourceNox(sSourceNox);
+            loControl.setsSourceCD(sSourceCD);
+            loControl.setTransNo(sTransNox);
             fxmlLoader.setController(loControl);
-
+            
             //load the main interface
             Parent parent = fxmlLoader.load();
             parent.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -70,13 +69,14 @@ public class CancelForm {
             stage.setTitle("");
             stage.showAndWait();
             //get the cancellation action
-//            bState = loControl.setState();
-
+            bState = loControl.setState();
+            
         } catch (IOException e) {
+            e.printStackTrace();
             ShowMessageFX.Warning(e.getMessage(), "Warning", null);
             System.exit(1);
         }
-        return bState;
+        return bState ; 
     }
-
+     
 }

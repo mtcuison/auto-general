@@ -53,6 +53,7 @@ public class QuickSearchFormController implements Initializable {
     private String sValue = "";
     private ArrayList<String> psValue = new ArrayList<>(); 
     private ArrayList<String> psColName = new ArrayList<>(); 
+    private ArrayList<String> psColSort = new ArrayList<>(); 
     private ArrayList<String> psColType = new ArrayList<>(); 
     private ArrayList<String> psLogOprtr = new ArrayList<>();
     private ArrayList<String> psCriName = new ArrayList<>();
@@ -378,7 +379,7 @@ public class QuickSearchFormController implements Initializable {
                 
             }
             
-            lsSQL =  MiscUtil.addCondition( lsSQL,   lsQuery) + " ORDER BY " +  psColName.get(pnSort) + " ASC ";
+            lsSQL =  MiscUtil.addCondition( lsSQL,   lsQuery) + " ORDER BY " +  psColSort.get(pnSort) + " ASC ";
             System.out.println(lsSQL);
             try {
                 poSource = poGRider.executeQuery(lsSQL);
@@ -470,6 +471,7 @@ public class QuickSearchFormController implements Initializable {
                 psClosePar.clear();
                 psLogOprtr.clear();
                 psColName.clear();
+                psColSort.clear();
                 psColType.clear();
                 
                 while (loRS.next()){
@@ -511,6 +513,7 @@ public class QuickSearchFormController implements Initializable {
                     if(loRS.getString("sDivClose").isEmpty()){ psClosePar.add("»"); } else { psClosePar.add(loRS.getString("sDivClose")); }
                     if(loRS.getString("sLogOprtr").isEmpty()){ psLogOprtr.add("»"); } else { psLogOprtr.add(loRS.getString("sLogOprtr")); }
                     if(lsColName.isEmpty()){ psColName.add("»"); } else { psColName.add(lsColName); }
+                    if(loRS.getString("sRetColNm").isEmpty()){ psColSort.add("»"); } else { psColSort.add(loRS.getString("sRetColNm")); }
                     if(loRS.getString("sRetColTp").isEmpty()){ psColType.add("»"); } else { psColType.add(loRS.getString("sRetColTp")); }
                 }
                 MiscUtil.close(loRS);

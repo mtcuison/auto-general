@@ -35,8 +35,14 @@ public class LockTransaction {
         poGRider = foValue;
     }
     
-    public JSONObject saveLockTransaction(String fsTableName, String fsWhereCol, String fsTransNo){
+    public JSONObject saveLockTransaction(String fsTableName, String fsWhereCol, String fsTransNo, String fsTargetBranch){
         JSONObject lObj = new JSONObject();
+        String lsTargetBranch = "";
+        if (!poGRider.getBranchCode().equals(fsTargetBranch)){
+            lsTargetBranch = fsTargetBranch;
+        } else {
+            lsTargetBranch = "";
+        }
         
         poGRider.beginTrans();
         
@@ -45,7 +51,7 @@ public class LockTransaction {
                 + " , dLockedDt = " + SQLUtil.toSQL(poGRider.getServerDate())
                 + " WHERE "+fsWhereCol+" = "+ SQLUtil.toSQL(fsTransNo);
         if (!lsSQL.isEmpty()) {
-            if (poGRider.executeQuery(lsSQL, fsTableName, poGRider.getBranchCode(), "") > 0) {
+            if (poGRider.executeQuery(lsSQL, fsTableName, poGRider.getBranchCode(), lsTargetBranch) > 0) {
                 lObj.put("result", "success");
                 lObj.put("message", "Record updated locked status successfully.");
             } else {

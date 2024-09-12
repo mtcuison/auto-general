@@ -77,7 +77,7 @@ public class CancelFormController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         oTrans = new CancellationMaster(oApp, oApp.getBranchCode(), true); //Initialize ClientMaster
 
-        lblFormNo.setText(sTransNo);
+        lblFormNo.setText(sSourceNox);
         setCapsLockBehavior(textArea01);
 
         Pattern pattern;

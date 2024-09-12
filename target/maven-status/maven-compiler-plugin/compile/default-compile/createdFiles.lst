@@ -12,4 +12,5 @@ org\guanzon\auto\general\CancelForm$2.class
 org\guanzon\auto\general\CancelForm.class
 org\guanzon\auto\general\QuickSearch$2.class
 org\guanzon\auto\general\SearchDialog.class
+org\guanzon\auto\general\LockTransaction.class
 org\guanzon\auto\general\QuickSearch.class

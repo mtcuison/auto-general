@@ -50,7 +50,7 @@ import org.json.simple.parser.ParseException;
  */
 public class QuickSearchFormController implements Initializable {
     private String psSQLSrce = "";
-    private String sValue = "";
+    private String psCondition = "";
     private ArrayList<String> psValue = new ArrayList<>(); 
     private ArrayList<String> psColName = new ArrayList<>(); 
     private ArrayList<String> psColSort = new ArrayList<>(); 
@@ -126,7 +126,7 @@ public class QuickSearchFormController implements Initializable {
     }
 
     public void setFieldValue(String fsCondition) {
-        sValue = fsCondition;
+        psCondition = " " + fsCondition + " ";
     }
 
     public void setFieldName(String fsField) {
@@ -379,7 +379,7 @@ public class QuickSearchFormController implements Initializable {
                 
             }
             
-            lsSQL =  MiscUtil.addCondition( lsSQL,   lsQuery) + " ORDER BY " +  psColSort.get(pnSort) + " ASC ";
+            lsSQL =  MiscUtil.addCondition( lsSQL,   lsQuery) + psCondition + " ORDER BY " +  psColSort.get(pnSort) + " ASC ";
             System.out.println(lsSQL);
             try {
                 poSource = poGRider.executeQuery(lsSQL);

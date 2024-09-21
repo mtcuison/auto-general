@@ -17,26 +17,26 @@ import org.json.simple.JSONObject;
 
 /**
  *
- * @author MIS-PC
+ * @author Arsiela
  */
 public class SearchDialog {
     /**
      * 
      * @param foGRider 
      * @param fsSQL = SQL Statement
-     * @param fsValue = search value
+     * @param fCondition = search value / group by
      * 
      * @param fsHeader = Header Name
      * @param fsColName = Column Name based on header to show data result
      * @param fsFormCode = Form Name or Code based on form_list_retrieval table
-     * @param fsCriteria = Array List for criteria
-     * @param fsColCrit = Array List for column name of criteria
+     * @param fsColSize = Array List for header size
+     * @param fsFormCode = Form Name
      * @param fnSort = sorting based on criteria
      * @return 
      */
     public static JSONObject jsonSearch(GRider foGRider, 
                                         String fsSQL, 
-                                        String fsValue, 
+                                        String fCondition, 
                                         String fsHeader, 
                                         String fsColName,
                                         String fsColSize, 
@@ -44,7 +44,7 @@ public class SearchDialog {
                                         int fnSort) {
         
         try {
-            ResultSet loRS = foGRider.executeQuery(fsSQL );
+            ResultSet loRS = foGRider.executeQuery(fsSQL + " " + fCondition);
             if (MiscUtil.RecordCount(loRS) == 1L)
                 return CommonUtils.loadJSON(loRS); 
             if (MiscUtil.RecordCount(loRS) > 1L) {
@@ -53,7 +53,7 @@ public class SearchDialog {
                 loSearch.setGRider(foGRider);
                 loSearch.setResultSet(loRS);
                 loSearch.setSQLSource(fsSQL);
-                loSearch.setConditionValue(fsValue);
+                loSearch.setConditionValue(fCondition);
                 loSearch.setColumnHeader(fsHeader);
                 loSearch.setColunmName(fsColName);
                 loSearch.setFormCode(fsFormCode);

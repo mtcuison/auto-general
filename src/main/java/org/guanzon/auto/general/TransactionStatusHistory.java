@@ -185,6 +185,18 @@ public class TransactionStatusHistory implements GTransaction{
         
         return poJSON;
     }
+    
+    @Override
+    public JSONObject cancelTransaction(String fsSourceNo){
+        poJSON = new JSONObject();  
+        
+        poJSON =  poModel.cancelRecord(fsSourceNo);
+        if("error".equalsIgnoreCase((String) poJSON.get("result"))){
+            if (!pbWtParent) poGRider.rollbackTrans();
+            return checkData(poJSON);
+        } 
+        return poJSON;
+    }
 
     @Override
     public JSONObject deleteTransaction(String string) {
@@ -205,12 +217,6 @@ public class TransactionStatusHistory implements GTransaction{
     public JSONObject voidTransaction(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public JSONObject cancelTransaction(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     
     public JSONObject searchTransaction(String string, boolean fbByCode) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

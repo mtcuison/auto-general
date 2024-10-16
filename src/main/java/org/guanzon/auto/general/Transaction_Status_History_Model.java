@@ -31,7 +31,7 @@ public class Transaction_Status_History_Model implements GEntity{
 final String XML = "Model_Transaction_Status_History.xml";
     private final String psDefaultDate = "1900-01-01";
     private String psBranchCd;
-    private String psExclude = "sPayloadx"; //» partially added to exclude
+    private String psExclude = ""; //» partially added to exclude sPayloadx
     
     GRider poGRider;                //application driver
     CachedRowSet poEntity;          //rowset
@@ -289,6 +289,15 @@ final String XML = "Model_Transaction_Status_History.xml";
                 setTransNo(MiscUtil.getNextCode(getTable(), "sTransNox", true, poGRider.getConnection(), poGRider.getBranchCode()));
                 setModifiedBy(poGRider.getUserID());
                 setModifiedDte(poGRider.getServerDate());
+                System.out.println("JSON Payload : " + getPayload());
+                if(getPayload().isEmpty()){
+                    if(psExclude.isEmpty()){
+                        psExclude = "sPayloadx";
+                    } else {
+                        psExclude = psExclude + "»" + "sPayloadx";
+                    }
+                }
+                
                 lsSQL = MiscUtil.makeSQL(this, psExclude);
                 
                // lsSQL = "Select * FROM " + getTable() + " a left join (" + makeSQL() + ") b on a.column1 = b.column "
@@ -313,6 +322,14 @@ final String XML = "Model_Transaction_Status_History.xml";
                 if ("success".equals((String) loJSON.get("result"))) {
                     setModifiedBy(poGRider.getUserID());
                     setModifiedDte(poGRider.getServerDate());
+                    System.out.println("JSON Payload : " + getPayload());
+                    if(getPayload().isEmpty()){
+                        if(psExclude.isEmpty()){
+                            psExclude = "sPayloadx";
+                        } else {
+                            psExclude = psExclude + "»" + "sPayloadx";
+                        }
+                    }
                     
                     //replace the condition based on the primary key column of the record
                     lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sTransNox = " + SQLUtil.toSQL(this.getTransNo()), psExclude);
@@ -340,6 +357,25 @@ final String XML = "Model_Transaction_Status_History.xml";
             return poJSON;
         }
 
+        return poJSON;
+    }
+    
+    public JSONObject cancelRecord(String fsValue){
+        poJSON = new JSONObject();
+        
+        String lsSQL = " UPDATE "+getTable()+" SET cTranStat = "+SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED)
+                    +" WHERE "
+                    + " sSourceNo = " + SQLUtil.toSQL(fsValue);
+        if (!lsSQL.isEmpty()) {
+            if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0) {
+                poJSON.put("result", "success");
+                poJSON.put("message", "Record cancelled successfully.");
+            } else {
+                poJSON.put("result", "error");
+                poJSON.put("continue", true);
+                poJSON.put("message", poGRider.getErrMsg());
+            }
+        }
         return poJSON;
     }
     
@@ -500,15 +536,15 @@ final String XML = "Model_Transaction_Status_History.xml";
      * @param fsValue
      * @return result as success/failed
      */
-    public JSONObject setPayload(JSONObject fsValue) {
+    public JSONObject setPayload(String fsValue) {
         return setValue("sPayloadx", fsValue);
     }
 
     /**
      * @return The Value of this record.
      */
-    public JSONObject getPayload() {
-        return (JSONObject) getValue("sPayloadx");
+    public String getPayload() {
+        return (String) getValue("sPayloadx");
     }
     
     /**

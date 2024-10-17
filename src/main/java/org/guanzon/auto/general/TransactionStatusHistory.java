@@ -145,14 +145,14 @@ public class TransactionStatusHistory implements GTransaction{
     }
     
     private JSONObject checkData(JSONObject joValue){
-        if(pnEditMode == EditMode.READY || pnEditMode == EditMode.UPDATE){
+//        if(pnEditMode == EditMode.READY || pnEditMode == EditMode.UPDATE){
             if(joValue.containsKey("continue")){
                 if(true == (boolean)joValue.get("continue")){
                     joValue.put("result", "success");
                     joValue.put("message", "Record saved successfully.");
                 }
             }
-        }
+//        }
         return joValue;
     }
 
@@ -179,7 +179,7 @@ public class TransactionStatusHistory implements GTransaction{
         
         poJSON =  poModel.saveRecord();
         if("error".equalsIgnoreCase((String) poJSON.get("result"))){
-            if (!pbWtParent) poGRider.rollbackTrans();
+//            if (!pbWtParent) poGRider.rollbackTrans();
             return checkData(poJSON);
         } 
         
@@ -192,7 +192,7 @@ public class TransactionStatusHistory implements GTransaction{
         
         poJSON =  poModel.cancelRecord(fsSourceNo);
         if("error".equalsIgnoreCase((String) poJSON.get("result"))){
-            if (!pbWtParent) poGRider.rollbackTrans();
+//            if (!pbWtParent) poGRider.rollbackTrans();
             return checkData(poJSON);
         } 
         return poJSON;

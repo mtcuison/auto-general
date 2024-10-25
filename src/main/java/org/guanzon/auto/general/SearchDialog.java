@@ -44,6 +44,7 @@ public class SearchDialog {
                                         int fnSort) {
         
         try {
+            System.out.println("SEARCH EXECUTE : " + fsSQL + " " + fCondition);
             ResultSet loRS = foGRider.executeQuery(fsSQL + " " + fCondition);
             if (MiscUtil.RecordCount(loRS) == 1L)
                 return CommonUtils.loadJSON(loRS); 

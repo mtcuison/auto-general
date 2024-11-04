@@ -360,12 +360,16 @@ final String XML = "Model_Transaction_Status_History.xml";
         return poJSON;
     }
     
-    public JSONObject cancelRecord(String fsValue){
+    public JSONObject cancelRecord(String fsSourceNo, String fsStatus ){
         poJSON = new JSONObject();
         
-        String lsSQL = " UPDATE "+getTable()+" SET cTranStat = "+SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED)
-                    +" WHERE "
-                    + " sSourceNo = " + SQLUtil.toSQL(fsValue);
+        String lsSQL = " UPDATE "+getTable()
+                    + " SET cTranStat = "+SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED)
+                    + " , sModified = "+SQLUtil.toSQL(poGRider.getUserID())
+                    + " , dModified = "+SQLUtil.toSQL(poGRider.getServerDate())
+                    + " WHERE sSourceNo = " + SQLUtil.toSQL(fsSourceNo) 
+                    + " AND cRefrStat = "+SQLUtil.toSQL(fsStatus) ; 
+        
         if (!lsSQL.isEmpty()) {
             if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0) {
                 poJSON.put("result", "success");

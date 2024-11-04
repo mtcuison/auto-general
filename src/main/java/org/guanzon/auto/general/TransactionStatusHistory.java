@@ -186,16 +186,20 @@ public class TransactionStatusHistory implements GTransaction{
         return poJSON;
     }
     
-    @Override
-    public JSONObject cancelTransaction(String fsSourceNo){
+    public JSONObject cancelTransaction(String fsSourceNo, String fsStatus ){
         poJSON = new JSONObject();  
         
-        poJSON =  poModel.cancelRecord(fsSourceNo);
+        poJSON =  poModel.cancelRecord(fsSourceNo, fsStatus );
         if("error".equalsIgnoreCase((String) poJSON.get("result"))){
 //            if (!pbWtParent) poGRider.rollbackTrans();
             return checkData(poJSON);
         } 
         return poJSON;
+    }
+    
+    @Override
+    public JSONObject cancelTransaction(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

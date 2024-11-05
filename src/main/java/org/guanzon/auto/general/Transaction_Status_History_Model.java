@@ -62,7 +62,7 @@ final String XML = "Model_Transaction_Status_History.xml";
             poEntity.moveToInsertRow();
 
             MiscUtil.initRowSet(poEntity);        
-            poEntity.updateObject("dApproved", poGRider.getServerDate()); 
+            poEntity.updateObject("dApproved", SQLUtil.toDate(psDefaultDate, SQLUtil.FORMAT_SHORT_DATE)); 
             poEntity.updateObject("dModified", poGRider.getServerDate()); 
             poEntity.updateString("cTranStat", TransactionStatus.STATE_OPEN); 
 

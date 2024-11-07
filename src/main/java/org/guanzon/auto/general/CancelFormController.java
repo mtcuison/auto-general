@@ -103,7 +103,7 @@ public class CancelFormController implements Initializable {
                     return;
                 }
 
-                if (oTrans.CancelForm(sTransNo, textArea01.getText(), sSourceCD, sSourceNox)) {
+                if (oTrans.CancelForm(sTransNo, textArea01.getText(), sSourceCD)) { //, sSourceNox
                     state = true;
                 } else {
                     return;

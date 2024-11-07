@@ -28,7 +28,8 @@ public class CancelForm {
     private double yOffset = 0;
     public boolean bState = false;
     /*CANCELLATION FORM REMARKS*/
-    public boolean loadCancelWindow(GRider oApp, String sSourceNox, String sTransNox, String sSourceCD ) throws SQLException{
+//    public boolean loadCancelWindow(GRider oApp, String sSourceNox, String sTransNox, String sSourceCD ) throws SQLException{
+    public boolean loadCancelWindow(GRider oApp, String sTransNox, String sSourceCD ) throws SQLException{
        
         try {
             Stage stage = new Stage();
@@ -38,7 +39,7 @@ public class CancelForm {
 
             CancelFormController loControl = new CancelFormController();
             loControl.setGRider(oApp);
-            loControl.setsSourceNox(sSourceNox);
+//            loControl.setsSourceNox(sSourceNox);
             loControl.setsSourceCD(sSourceCD);
             loControl.setTransNo(sTransNox);
             fxmlLoader.setController(loControl);

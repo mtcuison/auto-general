@@ -251,6 +251,26 @@ public class TransactionStatusHistory implements GTransaction{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public JSONObject updateStatusHistory(String fsReferNo, String fsTableName, String fsRemarks, String fsAction){
+        JSONObject loJSON = new JSONObject();
+        loJSON = cancelTransaction(fsReferNo, fsAction);
+        if(!"error".equals((String) loJSON.get("result"))){
+            loJSON = newTransaction();
+            if(!"error".equals((String) loJSON.get("result"))){
+                poModel.setApproved(poGRider.getUserID());
+                poModel.setApprovedDte(poGRider.getServerDate());
+                poModel.setSourceNo(fsReferNo);
+                poModel.setTableNme(fsTableName);
+                poModel.setRemarks(fsRemarks);
+                poModel.setRefrStat(fsAction);
+
+                loJSON = saveTransaction();
+            }
+        }
+        
+        return loJSON;
+    }
+    
     private static String xsDateShort(java.util.Date fdValue) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(fdValue);

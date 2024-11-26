@@ -251,17 +251,29 @@ public class TransactionStatusHistory implements GTransaction{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public JSONObject updateStatusHistory(String fsReferNo, String fsTableName, String fsRemarks, String fsAction){
+    public JSONObject updateStatusHistory(String fsReferNo, String fsTableName, String fsRemarks, String fsAction, String fsType){
         JSONObject loJSON = new JSONObject();
         loJSON = cancelTransaction(fsReferNo, fsAction);
         if(!"error".equals((String) loJSON.get("result"))){
             loJSON = newTransaction();
             if(!"error".equals((String) loJSON.get("result"))){
-                poModel.setApproved(poGRider.getUserID());
-                poModel.setApprovedDte(poGRider.getServerDate());
+                switch(fsAction){
+                    case TransactionStatus.STATE_CLOSED:
+                        if( fsType.equals("APPROVED")){
+                            poModel.setApproved(poGRider.getUserID());
+                            poModel.setApprovedDte(poGRider.getServerDate());
+                        }
+                        poModel.setRemarks(fsType+ ": "+fsRemarks);
+                        break;
+                    case TransactionStatus.STATE_CANCELLED:
+                        poModel.setRemarks(fsRemarks);
+                        break;
+                    default:
+                        poModel.setRemarks(fsType+ ": "+fsRemarks);  
+                }
+                
                 poModel.setSourceNo(fsReferNo);
                 poModel.setTableNme(fsTableName);
-                poModel.setRemarks(fsRemarks);
                 poModel.setRefrStat(fsAction);
 
                 loJSON = saveTransaction();

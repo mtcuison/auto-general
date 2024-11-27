@@ -257,21 +257,14 @@ public class TransactionStatusHistory implements GTransaction{
         if(!"error".equals((String) loJSON.get("result"))){
             loJSON = newTransaction();
             if(!"error".equals((String) loJSON.get("result"))){
-                switch(fsAction){
-                    case TransactionStatus.STATE_CLOSED:
-                        if( fsType.equals("APPROVED")){
-                            poModel.setApproved(poGRider.getUserID());
-                            poModel.setApprovedDte(poGRider.getServerDate());
-                        }
-                        poModel.setRemarks(fsType+ ": "+fsRemarks);
-                        break;
-                    case TransactionStatus.STATE_CANCELLED:
-                        poModel.setRemarks(fsRemarks);
-                        break;
-                    default:
-                        poModel.setRemarks(fsType+ ": "+fsRemarks);  
+                if(fsAction.equals(TransactionStatus.STATE_CLOSED)){
+                    if( fsType.equals("APPROVED")){
+                        poModel.setApproved(poGRider.getUserID());
+                        poModel.setApprovedDte(poGRider.getServerDate());
+                    }
                 }
                 
+                poModel.setRemarks(fsType+ ": "+fsRemarks);
                 poModel.setSourceNo(fsReferNo);
                 poModel.setTableNme(fsTableName);
                 poModel.setRefrStat(fsAction);

@@ -290,11 +290,22 @@ final String XML = "Model_Transaction_Status_History.xml";
                 setModifiedBy(poGRider.getUserID());
                 setModifiedDte(poGRider.getServerDate());
                 System.out.println("JSON Payload : " + getPayload());
-                if(getPayload().isEmpty()){
-                    if(psExclude.isEmpty()){
+                
+                if(getPayload() == null){
+                    setPayload("{}");
+                    if(psExclude.isEmpty()){ //Try to exclude when payload is empty
                         psExclude = "sPayloadx";
                     } else {
                         psExclude = psExclude + "»" + "sPayloadx";
+                    }
+                } else {
+                    if(getPayload().isEmpty()){
+                        setPayload("{}");
+                        if(psExclude.isEmpty()){ //Try to exclude when payload is empty
+                            psExclude = "sPayloadx";
+                        } else {
+                            psExclude = psExclude + "»" + "sPayloadx";
+                        }
                     }
                 }
                 
@@ -323,11 +334,21 @@ final String XML = "Model_Transaction_Status_History.xml";
                     setModifiedBy(poGRider.getUserID());
                     setModifiedDte(poGRider.getServerDate());
                     System.out.println("JSON Payload : " + getPayload());
-                    if(getPayload().isEmpty()){
-                        if(psExclude.isEmpty()){
+                    if(getPayload() == null){
+                        setPayload("{}");
+                        if(psExclude.isEmpty()){ //Try to exclude when payload is empty
                             psExclude = "sPayloadx";
                         } else {
                             psExclude = psExclude + "»" + "sPayloadx";
+                        }
+                    } else {
+                        if(getPayload().isEmpty()){
+                            setPayload("{}");
+                            if(psExclude.isEmpty()){ //Try to exclude when payload is empty
+                                psExclude = "sPayloadx";
+                            } else {
+                                psExclude = psExclude + "»" + "sPayloadx";
+                            }
                         }
                     }
                     

@@ -62,7 +62,7 @@ final String XML = "Model_Transaction_Status_History.xml";
             poEntity.moveToInsertRow();
 
             MiscUtil.initRowSet(poEntity);        
-            poEntity.updateObject("dApproved", poGRider.getServerDate()); 
+            poEntity.updateObject("dApproved", SQLUtil.toDate(psDefaultDate, SQLUtil.FORMAT_SHORT_DATE)); 
             poEntity.updateObject("dModified", poGRider.getServerDate()); 
             poEntity.updateString("cTranStat", TransactionStatus.STATE_OPEN); 
 
@@ -290,11 +290,22 @@ final String XML = "Model_Transaction_Status_History.xml";
                 setModifiedBy(poGRider.getUserID());
                 setModifiedDte(poGRider.getServerDate());
                 System.out.println("JSON Payload : " + getPayload());
-                if(getPayload().isEmpty()){
-                    if(psExclude.isEmpty()){
+                
+                if(getPayload() == null){
+                    setPayload("{}");
+                    if(psExclude.isEmpty()){ //Try to exclude when payload is empty
                         psExclude = "sPayloadx";
                     } else {
                         psExclude = psExclude + "»" + "sPayloadx";
+                    }
+                } else {
+                    if(getPayload().isEmpty()){
+                        setPayload("{}");
+                        if(psExclude.isEmpty()){ //Try to exclude when payload is empty
+                            psExclude = "sPayloadx";
+                        } else {
+                            psExclude = psExclude + "»" + "sPayloadx";
+                        }
                     }
                 }
                 
@@ -323,11 +334,21 @@ final String XML = "Model_Transaction_Status_History.xml";
                     setModifiedBy(poGRider.getUserID());
                     setModifiedDte(poGRider.getServerDate());
                     System.out.println("JSON Payload : " + getPayload());
-                    if(getPayload().isEmpty()){
-                        if(psExclude.isEmpty()){
+                    if(getPayload() == null){
+                        setPayload("{}");
+                        if(psExclude.isEmpty()){ //Try to exclude when payload is empty
                             psExclude = "sPayloadx";
                         } else {
                             psExclude = psExclude + "»" + "sPayloadx";
+                        }
+                    } else {
+                        if(getPayload().isEmpty()){
+                            setPayload("{}");
+                            if(psExclude.isEmpty()){ //Try to exclude when payload is empty
+                                psExclude = "sPayloadx";
+                            } else {
+                                psExclude = psExclude + "»" + "sPayloadx";
+                            }
                         }
                     }
                     
@@ -360,12 +381,16 @@ final String XML = "Model_Transaction_Status_History.xml";
         return poJSON;
     }
     
-    public JSONObject cancelRecord(String fsValue){
+    public JSONObject cancelRecord(String fsSourceNo, String fsStatus ){
         poJSON = new JSONObject();
         
-        String lsSQL = " UPDATE "+getTable()+" SET cTranStat = "+SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED)
-                    +" WHERE "
-                    + " sSourceNo = " + SQLUtil.toSQL(fsValue);
+        String lsSQL = " UPDATE "+getTable()
+                    + " SET cTranStat = "+SQLUtil.toSQL(TransactionStatus.STATE_CANCELLED)
+                    + " , sModified = "+SQLUtil.toSQL(poGRider.getUserID())
+                    + " , dModified = "+SQLUtil.toSQL(poGRider.getServerDate())
+                    + " WHERE sSourceNo = " + SQLUtil.toSQL(fsSourceNo) 
+                    + " AND cRefrStat = "+SQLUtil.toSQL(fsStatus) ; 
+        
         if (!lsSQL.isEmpty()) {
             if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0) {
                 poJSON.put("result", "success");

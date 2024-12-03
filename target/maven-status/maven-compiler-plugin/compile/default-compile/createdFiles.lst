@@ -2,8 +2,10 @@ org\guanzon\auto\general\QuickSearchFormController$1.class
 org\guanzon\auto\general\QuickSearchFormController.class
 org\guanzon\auto\general\CancellationMaster.class
 org\guanzon\auto\general\QuickSearchFormController$2.class
+org\guanzon\auto\general\TransactionStatusHistoryXML.class
 org\guanzon\auto\general\JsonStateManager.class
 org\guanzon\auto\general\QuickSearchTable.class
+org\guanzon\auto\general\UserStateManager.class
 org\guanzon\auto\general\CancelForm$1.class
 org\guanzon\auto\general\QuickSearch$1.class
 org\guanzon\auto\general\CancelFormController.class
@@ -12,5 +14,7 @@ org\guanzon\auto\general\CancelForm$2.class
 org\guanzon\auto\general\CancelForm.class
 org\guanzon\auto\general\QuickSearch$2.class
 org\guanzon\auto\general\SearchDialog.class
+org\guanzon\auto\general\TransactionStatusHistory.class
 org\guanzon\auto\general\LockTransaction.class
 org\guanzon\auto\general\QuickSearch.class
+org\guanzon\auto\general\Transaction_Status_History_Model.class

@@ -35,6 +35,8 @@ public class CancelFormController implements Initializable {
     private String sSourceNox;
     private String sTransNo;
     private String sSourceCD;
+    private String sAction = "";
+    private String sType = "";
 
     private final String pxeModuleName = "Cancellation / Deactivation Remarks";
     @FXML
@@ -62,6 +64,14 @@ public class CancelFormController implements Initializable {
         sTransNo = fsValue;
     }
 
+    public void setAction(String fsValue) {
+        sAction = fsValue;
+    }
+
+    public void setType(String fsValue) {
+        sType = fsValue;
+    }
+
     public boolean setState() {
         return state;
     }
@@ -76,7 +86,7 @@ public class CancelFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         oTrans = new CancellationMaster(oApp, oApp.getBranchCode(), true); //Initialize ClientMaster
-
+        oTrans.setAction(sAction, sType);
         lblFormNo.setText(sSourceNox);
         setCapsLockBehavior(textArea01);
 
@@ -103,7 +113,7 @@ public class CancelFormController implements Initializable {
                     return;
                 }
 
-                if (oTrans.CancelForm(sTransNo, textArea01.getText(), sSourceCD, sSourceNox)) {
+                if (oTrans.CancelForm(sTransNo, textArea01.getText(), sSourceCD)) { //, sSourceNox
                     state = true;
                 } else {
                     return;

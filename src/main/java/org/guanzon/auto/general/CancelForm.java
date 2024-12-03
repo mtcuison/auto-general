@@ -26,9 +26,18 @@ import org.guanzon.appdriver.base.GRider;
 public class CancelForm {
     private double xOffset = 0;
     private double yOffset = 0;
+    private String psAction = "";
+    private String psType = "";
     public boolean bState = false;
+    
+    public void setAction(String fsAction, String fsType){
+        psAction = fsAction;
+        psType = fsType;
+    }
+    
     /*CANCELLATION FORM REMARKS*/
-    public boolean loadCancelWindow(GRider oApp, String sSourceNox, String sTransNox, String sSourceCD ) throws SQLException{
+//    public boolean loadCancelWindow(GRider oApp, String sSourceNox, String sTransNox, String sSourceCD ) throws SQLException{
+    public boolean loadCancelWindow(GRider oApp, String sTransNox, String sSourceCD ) throws SQLException{
        
         try {
             Stage stage = new Stage();
@@ -38,9 +47,11 @@ public class CancelForm {
 
             CancelFormController loControl = new CancelFormController();
             loControl.setGRider(oApp);
-            loControl.setsSourceNox(sSourceNox);
+//            loControl.setsSourceNox(sSourceNox);
             loControl.setsSourceCD(sSourceCD);
             loControl.setTransNo(sTransNox);
+            loControl.setAction(psAction);
+            loControl.setType(psType);
             fxmlLoader.setController(loControl);
             
             //load the main interface

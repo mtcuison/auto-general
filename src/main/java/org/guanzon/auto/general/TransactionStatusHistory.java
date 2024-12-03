@@ -186,16 +186,20 @@ public class TransactionStatusHistory implements GTransaction{
         return poJSON;
     }
     
-    @Override
-    public JSONObject cancelTransaction(String fsSourceNo){
+    public JSONObject cancelTransaction(String fsSourceNo, String fsStatus ){
         poJSON = new JSONObject();  
         
-        poJSON =  poModel.cancelRecord(fsSourceNo);
+        poJSON =  poModel.cancelRecord(fsSourceNo, fsStatus );
         if("error".equalsIgnoreCase((String) poJSON.get("result"))){
 //            if (!pbWtParent) poGRider.rollbackTrans();
             return checkData(poJSON);
         } 
         return poJSON;
+    }
+    
+    @Override
+    public JSONObject cancelTransaction(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -245,6 +249,31 @@ public class TransactionStatusHistory implements GTransaction{
     @Override
     public void setTransactionStatus(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public JSONObject updateStatusHistory(String fsReferNo, String fsTableName, String fsRemarks, String fsAction, String fsType){
+        JSONObject loJSON = new JSONObject();
+        loJSON = cancelTransaction(fsReferNo, fsAction);
+        if(!"error".equals((String) loJSON.get("result"))){
+            loJSON = newTransaction();
+            if(!"error".equals((String) loJSON.get("result"))){
+                if(fsAction.equals(TransactionStatus.STATE_CLOSED)){
+                    if( fsType.equals("APPROVED")){
+                        poModel.setApproved(poGRider.getUserID());
+                        poModel.setApprovedDte(poGRider.getServerDate());
+                    }
+                }
+                
+                poModel.setRemarks(fsType+ ": "+fsRemarks);
+                poModel.setSourceNo(fsReferNo);
+                poModel.setTableNme(fsTableName);
+                poModel.setRefrStat(fsAction);
+
+                loJSON = saveTransaction();
+            }
+        }
+        
+        return loJSON;
     }
     
     private static String xsDateShort(java.util.Date fdValue) {

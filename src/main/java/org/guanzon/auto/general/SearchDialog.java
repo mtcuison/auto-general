@@ -49,6 +49,11 @@ public class SearchDialog {
             if (MiscUtil.RecordCount(loRS) == 1L)
                 return CommonUtils.loadJSON(loRS); 
             if (MiscUtil.RecordCount(loRS) > 1L) {
+                //Clear condition when it contains "WHERE" stmt
+                if(fCondition.contains("WHERE")){
+                    fCondition = ""; 
+                }
+                
                 loRS.first();
                 QuickSearch loSearch = new QuickSearch();
                 loSearch.setGRider(foGRider);
